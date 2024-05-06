@@ -35,20 +35,14 @@ if (count == null) {
     localStorage.setItem('count', '1')
 }
 
-// Добавлены обработчики событий для клика и сенсорного касания
-const clickHandler = () => {
-    incrementCounters();
-};
+image.addEventListener('touchend', (e) => {
+    e.preventDefault();
 
-const touchStartHandler = () => {
-    incrementCounters();
-};
+    let x = e.changedTouches[0].clientX;
+    let y = e.changedTouches[0].clientY;
 
-image.addEventListener('click', clickHandler);
-image.addEventListener('touchstart', touchStartHandler);
+    navigator.vibrate(5);
 
-// Функция для увеличения счетчиков монет и силы
-const incrementCounters = () => {
     coins = localStorage.getItem('coins');
     power = localStorage.getItem('power');
 
@@ -60,19 +54,25 @@ const incrementCounters = () => {
         body.querySelector('#power').textContent = `${Number(power) - 1}`;
     }
 
+    if (x < 150 & y < 150) {
+        image.style.transform = 'translate(-0.25rem, -0.25rem) skewY(-10deg) skewX(5deg)';
+    } else if (x < 150 & y > 150) {
+        image.style.transform = 'translate(-0.25rem, 0.25rem) skewY(-10deg) skewX(5deg)';
+    } else if (x > 150 & y > 150) {
+        image.style.transform = 'translate(0.25rem, 0.25rem) skewY(10deg) skewX(-5deg)';
+    } else if (x > 150 & y < 150) {
+        image.style.transform = 'translate(0.25rem, -0.25rem) skewY(10deg) skewX(-5deg)';
+    }
+
+    setTimeout(() => {
+        image.style.transform = 'translate(0px, 0px)';
+    }, 100);
+
     body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
-
-    // Добавлен сброс трансформации после нажатия
-    resetTransformation();
-};
-
-// Функция для сброса трансформации
-const resetTransformation = () => {
-    image.style.transform = 'none';
-};
+});
 
 setInterval(() => {
-    count = localStorage.getItem('count');
+    count = localStorage.getItem('count')
     power = localStorage.getItem('power');
     if (Number(total) > power) {
         localStorage.setItem('power', `${Number(power) + Number(count)}`);

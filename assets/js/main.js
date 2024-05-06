@@ -35,48 +35,20 @@ if (count == null) {
     localStorage.setItem('count', '1')
 }
 
-image.addEventListener('touchstart', (e) => {
+// Добавлены обработчики событий для клика и сенсорного касания
+const clickHandler = () => {
+    incrementCounters();
+};
 
-    let x = e.touches[0].clientX;
-    let y = e.touches[0].clientY;
+const touchStartHandler = () => {
+    incrementCounters();
+};
 
-    navigator.vibrate(5);
+image.addEventListener('click', clickHandler);
+image.addEventListener('touchstart', touchStartHandler);
 
-    coins = localStorage.getItem('coins');
-    power = localStorage.getItem('power');
-
-    if (Number(power) > 0) {
-        localStorage.setItem('coins', `${Number(coins) + 1}`);
-        h1.textContent = `${(Number(coins) + 1).toLocaleString()}`;
-
-        localStorage.setItem('power', `${Number(power) - 1}`);
-        body.querySelector('#power').textContent = `${Number(power) - 1}`;
-    }
-
-    if (x < 150 & y < 150) {
-        image.style.transform = 'translate(-0.25rem, -0.25rem) skewY(-10deg) skewX(5deg)';
-    } else if (x < 150 & y > 150) {
-        image.style.transform = 'translate(-0.25rem, 0.25rem) skewY(-10deg) skewX(5deg)';
-    } else if (x > 150 & y > 150) {
-        image.style.transform = 'translate(0.25rem, 0.25rem) skewY(10deg) skewX(-5deg)';
-    } else if (x > 150 & y < 150) {
-        image.style.transform = 'translate(0.25rem, -0.25rem) skewY(10deg) skewX(-5deg)';
-    }
-
-    setTimeout(() => {
-        image.style.transform = 'translate(0px, 0px)';
-    }, 100);
-
-    body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
-});
-
-// Добавляем слушатель для события click
-image.addEventListener('click', () => {
-    handleTouch();
-});
-
-// Функция для обработки касания или клика
-function handleTouch() {
+// Функция для увеличения счетчиков монет и силы
+const incrementCounters = () => {
     coins = localStorage.getItem('coins');
     power = localStorage.getItem('power');
 
@@ -89,10 +61,18 @@ function handleTouch() {
     }
 
     body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
-}
+
+    // Добавлен сброс трансформации после нажатия
+    resetTransformation();
+};
+
+// Функция для сброса трансформации
+const resetTransformation = () => {
+    image.style.transform = 'none';
+};
 
 setInterval(() => {
-    count = localStorage.getItem('count')
+    count = localStorage.getItem('count');
     power = localStorage.getItem('power');
     if (Number(total) > power) {
         localStorage.setItem('power', `${Number(power) + Number(count)}`);

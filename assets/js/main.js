@@ -3,8 +3,8 @@ const image = body.querySelector('#coin');
 const h1 = body.querySelector('h1');
 localStorage.setItem('total', '1000');
 body.querySelector('#total').textContent = '/1000';
-localStorage.setItem('power', '100');
-body.querySelector('#power').textContent = '100';
+localStorage.setItem('power', '1');
+body.querySelector('#power').textContent = '1';
 let coins = localStorage.getItem('coins');
 let total = localStorage.getItem('total');
 let power = localStorage.getItem('power');
@@ -25,8 +25,8 @@ if (total == null) {
 }
 
 if (power == null) {
-    localStorage.setItem('power', '100');
-    body.querySelector('#power').textContent = '100';
+    localStorage.setItem('power', '1');
+    body.querySelector('#power').textContent = '1';
 } else {
     body.querySelector('#power').textContent = power;
 }
@@ -35,11 +35,10 @@ if (count == null) {
     localStorage.setItem('count', '1')
 }
 
-image.addEventListener('touchend', (e) => {
-    e.preventDefault();
+image.addEventListener('touchstart', (e) => {
 
-    let x = e.changedTouches[0].clientX;
-    let y = e.changedTouches[0].clientY;
+    let x = e.touches[0].clientX;
+    let y = e.touches[0].clientY;
 
     navigator.vibrate(5);
 

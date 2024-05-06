@@ -3,8 +3,8 @@ const image = body.querySelector('#coin');
 const h1 = body.querySelector('h1');
 localStorage.setItem('total', '1000');
 body.querySelector('#total').textContent = '/1000';
-localStorage.setItem('power', '1');
-body.querySelector('#power').textContent = '1';
+localStorage.setItem('power', '100');
+body.querySelector('#power').textContent = '100';
 let coins = localStorage.getItem('coins');
 let total = localStorage.getItem('total');
 let power = localStorage.getItem('power');
@@ -25,8 +25,8 @@ if (total == null) {
 }
 
 if (power == null) {
-    localStorage.setItem('power', '1');
-    body.querySelector('#power').textContent = '1';
+    localStorage.setItem('power', '100');
+    body.querySelector('#power').textContent = '100';
 } else {
     body.querySelector('#power').textContent = power;
 }
@@ -78,4 +78,4 @@ setInterval(() => {
         body.querySelector('#power').textContent = `${Number(power) + Number(count)}`;
         body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
     }
-}, 200);
+}, 100);

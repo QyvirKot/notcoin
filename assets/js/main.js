@@ -78,4 +78,4 @@ setInterval(() => {
         body.querySelector('#power').textContent = `${Number(power) + Number(count)}`;
         body.querySelector('.progress').style.width = `${(100 * power) / total}%`;
     }
-}, 100);
+}, 500);

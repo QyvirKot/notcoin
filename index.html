@@ -3,55 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Clicker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <a href="#" class="select-none"><img src="icons/menu.svg" alt="Menu" width="30"></a>
-        <a href="#" class="select-none"><img src="icons/shop.svg" alt="Shop" width="30"></a>
-        <a href="#" class="select-none"><img src="icons/rank.svg" alt="Rank" width="30"></a>
-        <a href="#" class="select-none"><img src="icons/boost.svg" alt="Boost" width="30"></a>
-        <a href="#" class="select-none"><img src="icons/guid.svg" alt="Guid" width="30"></a>
+    <div class="haeder">
+        <a href="#">Frens</a>
+        <a href="#">Leaderboard</a>
     </div>
     <div class="squad-container">
         <div class="login">
             <div class="login-detail">
-                <div class="profile select-none">
-                    <span>J</span>
+                <div class="profile">
+                    <span>JD</span>
                 </div>
                 <div class="user-data">
                     <div class="name">John Doe</div>
-                    <div class="user-rank">Rank 35</div>
+                    <div class="user-rank">Rank: #10</div>
                 </div>
             </div>
             <div class="coin-count-container">
-                <img src="icons/coin.svg" alt="Coin">
-                <h1>5000</h1>
+                <img src="coin.png" alt="coin">
+                <h1>10,000</h1>
             </div>
         </div>
     </div>
-    <div class="bottom-nav">
-        <div class="bottom-nav-item">
-            <img src="icons/home.svg" alt="Home" width="30">
-            <span>Home</span>
+    <div class="rank-container">
+        <div class="rank-items">
+            <h3>Rank:</h3>
+            <img src="rank.png" alt="rank">
+            <span id="rank">10</span>
         </div>
-        <div class="bottom-nav-item">
-            <img src="icons/skill.svg" alt="Skill" width="30">
-            <span>Skill</span>
+        <div class="rank-items">
+            <h3>Power:</h3>
+            <img src="power.png" alt="power">
+            <span id="power">15</span>
         </div>
-        <div class="bottom-nav-item">
-            <img src="icons/chat.svg" alt="Chat" width="30">
-            <span>Chat</span>
+        <div class="rank-items">
+            <h3>Coins per click:</h3>
+            <img src="coin.png" alt="coin">
+            <span id="clicks">50</span>
         </div>
-        <div class="bottom-nav-item">
-            <img src="icons/notification.svg" alt="Notification" width="30">
-            <span>Notification</span>
+    </div>
+    <div class="coin-container">
+        <img src="coin.png" alt="coin" id="coin">
+        <span>+50</span>
+    </div>
+    <div class="menu-container">
+        <div class="power">
+            <div class="power-count">
+                <span>Power</span>
+                <span class="gray">+20</span>
+            </div>
         </div>
-        <div class="bottom-nav-item">
-            <img src="icons/settings.svg" alt="Settings" width="30">
-            <span>Settings</span>
+        <div class="menu-bottuns">
+            <div class="button b-r">
+                <img src="boost.png" alt="boost">
+                <span>Boost</span>
+            </div>
+            <div class="button b-r">
+                <img src="shop.png" alt="shop">
+                <span>Shop</span>
+            </div>
+            <div class="button">
+                <img src="guid.png" alt="guid">
+                <span>Guid</span>
+            </div>
         </div>
+    </div>
+    <div class="progress-bar">
+        <div class="progress" style="width: 60%;"></div>
     </div>
 </body>
 </html>

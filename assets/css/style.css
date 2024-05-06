@@ -124,6 +124,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+    touch-action: manipulation;
 }
 .coin-container span {
     position: absolute;

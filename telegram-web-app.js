@@ -305,7 +305,7 @@
   if (initParams.tgWebAppVersion) {
     webAppVersion = initParams.tgWebAppVersion;
   }
-  webAppPlatform = 'android';
+  tgWebAppPlatform = 'android';
 
   function onThemeChanged(eventType, eventData) {
     if (eventData.theme_params) {

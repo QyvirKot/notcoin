@@ -134,9 +134,22 @@
     }
     console.log('[Telegram.WebView] > postEvent', eventType, eventData);
 
-    if (true) { 
-    // Android WebView
+    if (window.TelegramWebviewProxy !== undefined) {
+      TelegramWebviewProxy.postEvent(eventType, JSON.stringify(eventData));
+      callback();
     }
+    else if (window.external && 'notify' in window.external) {
+      window.external.notify(JSON.stringify({eventType: eventType, eventData: eventData}));
+      callback();
+    }
+    else if (isIframe) {
+      try {
+        var trustedTarget = 'https://web.telegram.org';
+        // For now we don't restrict target, for testing purposes
+        trustedTarget = '*';
+        window.parent.postMessage(JSON.stringify({eventType: eventType, eventData: eventData}), trustedTarget);
+        callback();
+      } catch (e) {
         callback(e);
       }
     }
@@ -305,7 +318,10 @@
   if (initParams.tgWebAppVersion) {
     webAppVersion = initParams.tgWebAppVersion;
   }
-  tgWebAppPlatform = 'android';
+  initParams.tgWebAppPlatform = 'android';
+  if (initParams.tgWebAppPlatform) {
+    webAppPlatform = initParams.tgWebAppPlatform;
+  }
 
   function onThemeChanged(eventType, eventData) {
     if (eventData.theme_params) {

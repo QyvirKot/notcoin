@@ -32,7 +32,7 @@ TMAds={
   currentShowPromise:null,
   currentResolve:null,
   currentReject:null,
-  requestTimeout:15000,
+  requestTimeout:1000,
   currentIntBlob:null,
   currentRewBlob:null,
   userData:{},
@@ -371,7 +371,7 @@ TMAds={
           body:{
             app_key:TMAds.appKey,
             token:TMAds.token,
-            type: 2000,
+            type: 2,
             user_data:TMAds.userData
           }
         };
@@ -645,7 +645,7 @@ TMAds={
         app_key:this.appKey,
         token:this.token,
         ad_id:(this._showingRewardedAd ? this.currentRewardedAd.get() : (this._showingInterstitialAd ? this.currentInterstitialAd.get() : this.currentAd.get())).uuid,
-        type: (this._showingRewardedAd ? 2 : 1)
+        type: (this._showingRewardedAd ? 200 : 1)
       };
       if (this._overrideLanguageSet)
         _body.lang_code=this._overrideLanguage;

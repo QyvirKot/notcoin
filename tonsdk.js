@@ -123,7 +123,7 @@ async function didtrans() {
         //alert('Ошибка при отправке транзакции.');
     }
 
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    //await new Promise(resolve => setTimeout(resolve, 5000));
 
     // Формируем транзакцию
     const transaction1 = {

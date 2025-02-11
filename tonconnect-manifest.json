@@ -1,11 +1,5 @@
 {
-  "name": "NotCoin",
-  "short_name": "NotCoin",
-  "url": "https://qyvirkot.github.io/notcoin/",
-  "iconUrl": "https://ton.org/logo.png",
-  "description": "Your project description here",
-  "features": [
-    "connect-wallet",
-    "send-transaction"
-  ]
-}
+    "url": "https://qyvirkot.github.io/notcoin/",
+    "name": "Ton", 
+    "iconUrl": "https://ton.org/logo.png" 
+} 

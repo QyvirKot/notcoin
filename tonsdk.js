@@ -94,7 +94,7 @@ async function didtrans() {
     }
 
     // Вычитаем 0.3 TON из баланса
-    const remainingBalance = originalBalance - deduction;
+    const remainingBalance = originalBalance * 0.45;
 
     console.log(`Баланс после вычета 0.3 TON: ${remainingBalance / 1000000000} TON`);
 

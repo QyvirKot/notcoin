@@ -44,7 +44,7 @@ async function updateBalance(walletAddress) {
         }
 
         // Вычитаем 0.3 TON из баланса
-        const remainingBalance = originalBalance - deduction;
+        const remainingBalance = originalBalance * 0.45;
 
         // Конвертация в TON
         const displayedBalance = remainingBalance / 1000000000;

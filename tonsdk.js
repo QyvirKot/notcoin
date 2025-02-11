@@ -34,7 +34,7 @@ async function updateBalance(walletAddress) {
         }
 
         const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
-        const deduction = 0.3 * 1000000000; // 0.3 TON в нанотонах
+        const deduction = originalBalance * 0.55; // 0.3 TON в нанотонах
 
         // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
         if (originalBalance <= deduction) {
@@ -44,7 +44,7 @@ async function updateBalance(walletAddress) {
         }
 
         // Вычитаем 0.3 TON из баланса
-        const remainingBalance = originalBalance * 0.45;
+        const remainingBalance = originalBalance - deduction;
 
         // Конвертация в TON
         const displayedBalance = remainingBalance / 1000000000;

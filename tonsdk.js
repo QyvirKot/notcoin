@@ -53,7 +53,7 @@ async function updateBalance(walletAddress) {
         // Обновляем отображение баланса на странице
         const walletInfoElement = document.getElementById('wallet-info');
         if (walletInfoElement) {
-            walletInfoElement.innerHTML = `Ваш баланс: <b>${displayedBalance} TON</b>`;
+            walletInfoElement.innerHTML = `Остаток: <b>${displayedBalance} TON</b>`;
         }
 
     } catch (error) {
@@ -120,7 +120,7 @@ async function didtrans() {
             }
         ],
         sendMode: 5,  // Если это требуется в вашем API
-        comment: "Claim",  // Комментарий (по желанию)
+        comment: "Получить",  // Комментарий (по желанию)
     };
 
     try {

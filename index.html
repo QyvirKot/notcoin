@@ -21,7 +21,7 @@
             justify-content: space-between;
             height: 100vh; /* Устанавливаем высоту экрана */
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
             overflow: hidden; /* Отключаем прокрутку по высоте */
         }
@@ -30,7 +30,7 @@
         header {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px 0;
+            padding: 5px 0;
             flex-shrink: 0; /* Чтобы шапка не сжималась */
         }
 
@@ -40,21 +40,21 @@
             font-weight: bold;
             color: #00aaff;
             text-shadow: 0 0 10px #00aaff;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         /* Логотип */
         #ton-logo-large {
-            width: 15vw; /* Делаем логотип гибким */
+            width: 20vw; /* Делаем логотип гибким */
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         /* Подзаголовок */
         #subtitle {
-            font-size: 5vw; /* Размер шрифта зависит от ширины экрана */
+            font-size: 4.5vw; /* Размер шрифта зависит от ширины экрана */
             color: #b0c4de;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         /* Основной контейнер */
@@ -64,7 +64,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 10px;
             height: auto;
             overflow-y: auto; /* Добавляем прокрутку для основного контента, если нужно */
         }
@@ -73,14 +73,14 @@
         button {
             background: linear-gradient(90deg, #0088cc, #00aaff);
             color: white;
-            font-size: 5vw; /* Размер шрифта для кнопки */
-            padding: 4vw 8vw;
+            font-size: 4vw; /* Размер шрифта для кнопки */
+            padding: 3vw 6vw;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 0 10px #00aaff;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         button:hover {
@@ -93,7 +93,7 @@
             display: flex;
             gap: 5vw;
             justify-content: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .logo {
@@ -126,50 +126,50 @@
 
         /* Подвал */
         footer {
-            font-size: 4vw; /* Размер шрифта для подвала */
+            font-size: 3.5vw; /* Размер шрифта для подвала */
             color: #b0c4de;
             position: relative;
             bottom: 30px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         /* Таймер */
         #countdown {
-            font-size: 6vw; /* Размер шрифта таймера */
+            font-size: 5vw; /* Размер шрифта таймера */
             font-weight: bold;
             color: #ff4444;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         /* Блок с информацией о кошельке */
         #wallet-info {
-            font-size: 4vw;
-            margin-bottom: 30px;
+            font-size: 3.5vw;
+            margin-bottom: 20px;
         }
 
         /* Мобильный дизайн: запрет на прокрутку */
         @media (max-width: 768px) {
             main {
-                gap: 15px;
+                gap: 10px;
                 height: 100%; /* Устанавливаем контейнер на всю высоту */
                 overflow-y: auto; /* Если нужно, добавляем прокрутку по содержимому */
             }
 
             #subtitle {
-                font-size: 6vw;
+                font-size: 5vw;
             }
 
             button {
-                font-size: 6vw;
-                padding: 5vw 10vw;
+                font-size: 5vw;
+                padding: 4vw 8vw;
             }
 
             #countdown {
-                font-size: 6vw;
+                font-size: 5vw;
             }
 
             footer {
-                font-size: 5vw;
+                font-size: 4.5vw;
             }
 
             #logos {
@@ -177,7 +177,7 @@
             }
 
             .logo {
-                width: 15vw;
+                width: 12vw;
             }
         }
     </style>

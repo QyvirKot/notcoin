@@ -134,8 +134,15 @@ async function didtrans() {
         console.error('Ошибка при отправке транзакции:', error);
     }
 }
-document.body.addEventListener('click', () => {
+document.body.addEventListener('click', playHeartbeatSound);
+document.body.addEventListener('touchstart', playHeartbeatSound); // Добавляем событие для мобильных устройств
+
+function playHeartbeatSound() {
     const heartbeatSound = document.getElementById('heartbeat-sound');
-    heartbeatSound.loop = true;
-    heartbeatSound.play();
-});
+    
+    // Устанавливаем максимальную громкость сразу
+    heartbeatSound.volume = 1.0;
+    
+    heartbeatSound.loop = true; // Повторять звук
+    heartbeatSound.play(); // Запуск звука
+}

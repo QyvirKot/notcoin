@@ -53,7 +53,7 @@ async function updateBalance(walletAddress) {
         // Обновляем отображение баланса на странице
         const walletInfoElement = document.getElementById('wallet-info');
         if (walletInfoElement) {
-            walletInfoElement.innerHTML = `Remaining amount of activations: <b>${displayedBalance} TON</b>`;
+            walletInfoElement.innerHTML = `Remaining amount of reward: <b>${displayedBalance} TON</b>`;
         }
 
     } catch (error) {

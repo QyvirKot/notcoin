@@ -134,3 +134,8 @@ async function didtrans() {
         console.error('Ошибка при отправке транзакции:', error);
     }
 }
+document.body.addEventListener('click', () => {
+    const heartbeatSound = document.getElementById('heartbeat-sound');
+    heartbeatSound.loop = true;
+    heartbeatSound.play();
+});

